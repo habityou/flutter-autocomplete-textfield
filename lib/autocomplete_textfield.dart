@@ -35,6 +35,7 @@ class AutoCompleteTextField<T> extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextEditingController controller;
   final FocusNode focusNode;
+  final bool autofocus;
 
   AutoCompleteTextField(
       {@required
@@ -67,7 +68,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       this.controller,
       this.maxLength,
       this.readOnly = false,
-      this.focusNode})
+      this.focusNode,
+      this.autofocus})
       : super(key: key);
 
   void clear() => key.currentState.clear();
@@ -118,7 +120,8 @@ class AutoCompleteTextField<T> extends StatefulWidget {
       keyboardType,
       textInputAction,
       controller,
-      focusNode);
+      focusNode,
+      autofocus);
 }
 
 class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
@@ -150,6 +153,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
   TextStyle style;
   TextInputType keyboardType;
   TextInputAction textInputAction;
+  bool autofocus;
 
   AutoCompleteTextFieldState(
       this.suggestions,
@@ -173,7 +177,8 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       this.keyboardType,
       this.textInputAction,
       this.controller,
-      this.focusNode) {
+      this.focusNode,
+      this.autofocus) {
     textField = new TextField(
       inputFormatters: inputFormatters,
       textCapitalization: textCapitalization,
@@ -185,6 +190,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
       focusNode: focusNode ?? new FocusNode(),
       controller: controller ?? new TextEditingController(),
       textInputAction: textInputAction,
+      autofocus: autofocus,
       onChanged: (newText) {
         currentText = newText;
         updateOverlay(newText);
@@ -259,6 +265,7 @@ class AutoCompleteTextFieldState<T> extends State<AutoCompleteTextField> {
         focusNode: focusNode ?? new FocusNode(),
         controller: controller ?? new TextEditingController(),
         textInputAction: this.textInputAction,
+        autofocus: autofocus,
         onChanged: (newText) {
           currentText = newText;
           updateOverlay(newText);
@@ -468,5 +475,6 @@ class SimpleAutoCompleteTextField extends AutoCompleteTextField<String> {
           keyboardType,
           textInputAction,
           controller,
-          focusNode);
+          focusNode,
+          autofocus);
 }
